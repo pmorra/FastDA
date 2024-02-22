@@ -1,0 +1,59 @@
+Codes run in the conda environment with:
+  - python3.9
+  - numpy
+  - scipy
+  - time
+  - pylab
+  - os
+  - copy
+  - tensorflow 2.8.0
+  - tensorflow-addons 0.15.0
+
+File description of the main folder (fastDA):
+  
+  ./data/: 
+     input_distribution_map_parameters.mat : parameters to map from reduced space to 52D space
+     
+     DNS_2of392_FastDAin_DNSout.mat : input from fastDA and output from DNS from 2 of 392 DA solutions (cohort of measurements)
+     datatot.npy : training data (user-friendly format)
+     datatot_valid.npy : validation data (user-friendly format)
+     experiments_392_PSD/:
+       PSD*.mat : experimental measurements (cohort of measurements, PSD)
+       results*.mat : DA solutions for the 392 measurements in this folder
+     reference_BuchtaZaki2022JFRM/:
+       init_guess_parameters_input_distribution.mat : initial guess of input distribution from reference article by Buchta and Zaki, JFMR, 2022
+
+  ./LHS/:
+     input_data_sampling.py : lating hypercube sampling of input distribution 
+
+  ./model/:
+     train_network.py : trains and stores the DeepONet (data loss and validation loss printed in ./output.dat; trained DeepONet stored in ./ckpt)
+                        NB: if ./ckpt exists the training reads this as DeepONet and does not initialize a new one with the given parameters
+     plot_loss.py : reads output.dat and plots the loss function (MSE) on the training data and on the validation data
+
+  ./model/lib/: 
+     neural_network.py : DeepONet class
+     dataset_utils.py  : functions for dataset handling
+
+  ./model/records/:
+     train_000.tfrecord : training data
+     valid.tfrecord     : validation data
+  
+   ./pde/:
+     JCODE : source code to solve compressible Navier-Stokes and generated training data
+
+
+  ./assimilation.py : solve the data assimilation problem with gradient-free method and plots results
+  
+  ./utils.py : module with functions called in assimilation.py
+
+
+Instruction to run the codes:
+  i) in the conda environment and in ./model type "python train_network.py" to generated the folder ./ckpt and the file loss.dat
+  ii) once training is finished type "python plot_loss.py" to generate a plot of the loss function on training data and validation data
+  iii) move back to the folder fastDA and use assimilation.py to perform the assimilation and/or analyze the results
+  
+Data is generated with JCODE on the High Performance Computing Cluster of Johns Hopkins University. A copy of JCODE can be found on Github at https://github.com/pmorra 
+NB: due to size limitations the full data is not uploaded. Further details or files can be obtained upon request.
+
+For any inquiries refer to Prof. Tamer Zaki (t.zaki@jhu.edu) or Dr. Pierluigi Morra (pmorra1@jhu.edu). 

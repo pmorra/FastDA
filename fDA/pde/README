@@ -1,0 +1,9 @@
+Compressible Navier-Stokes discretized according to a SBP-SAT scheme are marched in time with JCODE.
+The time discretization is 4th-order Runge-Kutta in time and SBP 4-2 in space.
+
+This folder contains the source files of the code.
+
+The simulations were performed with MPI on 576 processes for about 5 hourse wall-clock time on the HPC cluster of Johns Hopkins University.
+
+The inflow boundary conditions are the vector sampled with LHS.
+To download JCODE: https://github.com/pmorra (the JCODE repository)
